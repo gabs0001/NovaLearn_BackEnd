@@ -264,10 +264,3 @@ O objetivo não é apenas funcionar —
 é demonstrar maturidade técnica e organização arquitetural.
 
 ---
-
-User->>API: Request with Access Token
-API->>User: Protected Resource
-
-User->>API: POST /auth/refresh
-API->>DB: Validate + Rotate Refresh Token
-API->>User: New Access + New Refresh Token
