@@ -18,6 +18,9 @@
     <properties>
         <java.version>21</java.version>
         <jjwt.version>0.12.6</jjwt.version>
+        <sonar.projectKey>gabs-key-0001</sonar.projectKey>
+        <sonar.organization>my-organization</sonar.organization>
+        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
     </properties>
 
     <dependencies>
