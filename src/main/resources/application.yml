@@ -1,0 +1,13 @@
+security:
+  jwt:
+    secret: ${JWT_SECRET}
+    expiration: 900000
+    refreshExpiration: 2592000
+    refreshExpirationRememberMe: 5184000
+
+spring:
+  main:
+    allow-bean-definition-overriding: true
+
+  flyway:
+    enabled: false
