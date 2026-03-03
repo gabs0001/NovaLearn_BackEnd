@@ -265,39 +265,6 @@ O objetivo não é apenas funcionar —
 
 ---
 
-flowchart TD
-
-Client[Client / Frontend]
-Client -->|HTTP Requests| API
-
-subgraph Application
-    API[API Layer\nControllers + DTOs + Mappers]
-    CORE[Core\nSecurity + Config + Exception]
-    DOMAIN[Domain\nEntities + Services + Events + Policies]
-    INFRA[Infrastructure\nJPA + Gateways + Security Providers]
-end
-
-API --> DOMAIN
-API --> CORE
-DOMAIN --> INFRA
-INFRA --> DB[(Oracle Database)]
-INFRA --> H2[(H2 - Tests)]
-
-DOMAIN -->|Domain Events| DOMAIN
-CORE -->|JWT Filter| API
-
----
-
-sequenceDiagram
-
-participant User
-participant API
-participant DB
-
-User->>API: POST /auth/login
-API->>DB: Validate credentials
-API->>User: Access Token + Refresh Token
-
 User->>API: Request with Access Token
 API->>User: Protected Resource
 
