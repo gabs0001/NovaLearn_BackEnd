@@ -7,6 +7,7 @@ import br.com.novalearn.platform.api.dtos.lesson.LessonUpdateRequestDTO;
 import br.com.novalearn.platform.domain.services.auth.AuthService;
 import br.com.novalearn.platform.domain.services.lesson.LessonService;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -40,7 +41,7 @@ public class LessonController {
     @PostMapping
     public ResponseEntity<LessonResponseDTO> create(@Valid @RequestBody LessonCreateRequestDTO request) {
         LessonResponseDTO response = lessonService.create(getUserId(), request);
-        return ResponseEntity.ok(response);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @PatchMapping("/{id}")

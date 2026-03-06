@@ -11,6 +11,7 @@ import br.com.novalearn.platform.api.dtos.register.RegisterResponseDTO;
 import br.com.novalearn.platform.api.dtos.user.UserResponseDTO;
 import br.com.novalearn.platform.domain.services.auth.AuthService;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -44,7 +45,7 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<RegisterResponseDTO> register(@Valid @RequestBody RegisterRequestDTO request) {
         RegisterResponseDTO response = authService.register(request);
-        return ResponseEntity.ok(response);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @PostMapping("/refresh")

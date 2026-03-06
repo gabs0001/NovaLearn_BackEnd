@@ -2,7 +2,6 @@ package br.com.novalearn.platform.core.security;
 
 import br.com.novalearn.platform.domain.entities.user.User;
 import br.com.novalearn.platform.domain.services.user.UserService;
-import io.jsonwebtoken.Claims;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -31,12 +30,6 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
             HttpServletResponse response,
             FilterChain filterChain
     ) throws ServletException, IOException {
-
-        if(SecurityContextHolder.getContext().getAuthentication() != null) {
-            filterChain.doFilter(request, response);
-            return;
-        }
-
         String authHeader = request.getHeader("Authorization");
 
         if(authHeader == null || !authHeader.startsWith("Bearer ")) {
@@ -46,38 +39,28 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
 
         String token = authHeader.substring(7);
 
-        if(!jwtUtil.validateToken(token) || jwtUtil.isExpired(token)) {
-            filterChain.doFilter(request, response);
-            return;
+        try {
+            if (jwtUtil.validateToken(token) && !jwtUtil.isExpired(token)) {
+                Long userId = jwtUtil.extractUserId(token);
+                User user = userService.findByIdOrThrow(userId);
+
+                if(user.isActive() && !user.isDeleted()) {
+                    var authority = new SimpleGrantedAuthority(user.getRole().name());
+
+                    UsernamePasswordAuthenticationToken authentication =
+                            new UsernamePasswordAuthenticationToken(
+                                    user,
+                                    null,
+                                    List.of(authority)
+                            );
+
+                    authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                    SecurityContextHolder.getContext().setAuthentication(authentication);
+                }
+            }
+        } catch (Exception e) {
+            SecurityContextHolder.clearContext();
         }
-
-        Long userId = jwtUtil.extractUserId(token);
-        if(userId == null) {
-            filterChain.doFilter(request, response);
-            return;
-        }
-
-        User user = userService.findByIdOrThrow(userId);
-
-        if(!user.isActive() || user.isDeleted()) {
-            filterChain.doFilter(request, response);
-            return;
-        }
-
-        var authority = new SimpleGrantedAuthority("ROLE_" + user.getRole());
-
-        UsernamePasswordAuthenticationToken authentication =
-                new UsernamePasswordAuthenticationToken(
-                        user.getId(),
-                        null,
-                        List.of(authority)
-                );
-
-        authentication.setDetails(
-                new WebAuthenticationDetailsSource().buildDetails(request)
-        );
-
-        SecurityContextHolder.getContext().setAuthentication(authentication);
 
         filterChain.doFilter(request, response);
     }

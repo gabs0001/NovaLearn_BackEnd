@@ -23,6 +23,10 @@ import lombok.*;
 
 import java.time.LocalDateTime;
 
+@Getter
+@Setter
+@Builder
+@AllArgsConstructor
 @Entity
 @Table(name = "T_SINL_USER")
 @SequenceGenerator(

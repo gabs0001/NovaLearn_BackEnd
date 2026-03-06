@@ -64,8 +64,6 @@ public class ModuleService extends BaseCrudService<Module> {
         Module module = moduleMapper.toEntity(dto, course);
         applyAuditCreate(module, userId);
 
-        module.attachToCourse(course);
-
         if(moduleRepository.existsByCourseIdAndNameIgnoreCaseAndDeletedFalse(
                 course.getId(), module.getName())) {
             throw new ValidationException("A module with this name already exists in this course.");

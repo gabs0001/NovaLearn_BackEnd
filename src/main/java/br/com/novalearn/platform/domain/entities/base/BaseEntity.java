@@ -36,6 +36,13 @@ public abstract class BaseEntity implements Auditable {
     @Transient
     private final List<DomainEvent> domainEvents = new ArrayList<>();
 
+    @PrePersist
+    protected void onCreate() {
+        this.createdAt = LocalDateTime.now();
+        this.active = true;
+        this.deleted = false;
+    }
+
     public void activate() {
         ensureNotDeleted();
         this.active = true;

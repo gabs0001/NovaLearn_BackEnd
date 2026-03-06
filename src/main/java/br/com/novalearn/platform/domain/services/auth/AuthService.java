@@ -86,11 +86,11 @@ public class AuthService {
             throw new UnauthorizedException("User is not authenticated.");
         }
 
-        if(!(auth.getPrincipal() instanceof Long userId)) {
-            throw new InvalidStateException("Invalid authentication principal.");
+        if(auth.getPrincipal() instanceof User user) {
+            return user;
         }
 
-        return userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("Authenticated user not found."));
+        throw new InvalidStateException("Invalid authentication principal.");
     }
 
     @Transactional
@@ -112,6 +112,9 @@ public class AuthService {
                 dto.getPhone(),
                 dto.getAvatarUrl()
         );
+
+        String encodedPassword = passwordEncoder.encode(dto.getPassword());
+        user.initializeNewUser(encodedPassword, LocalDateTime.now());
 
         User saved = userRepository.save(user);
 

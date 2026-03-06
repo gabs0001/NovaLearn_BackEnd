@@ -7,6 +7,7 @@ import br.com.novalearn.platform.api.dtos.category.CategoryUpdateRequestDTO;
 import br.com.novalearn.platform.domain.services.auth.AuthService;
 import br.com.novalearn.platform.domain.services.category.CategoryService;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -40,7 +41,7 @@ public class CategoryController {
     @PostMapping
     public ResponseEntity<CategoryResponseDTO> create(@Valid @RequestBody CategoryCreateRequestDTO request) {
         CategoryResponseDTO response = categoryService.create(getUserId(), request);
-        return ResponseEntity.ok(response);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @PatchMapping("/{id}")

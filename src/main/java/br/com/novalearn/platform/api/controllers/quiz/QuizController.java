@@ -9,6 +9,7 @@ import br.com.novalearn.platform.api.dtos.user.quizattempt.UserQuizAttemptListRe
 import br.com.novalearn.platform.domain.services.auth.AuthService;
 import br.com.novalearn.platform.domain.services.quiz.QuizService;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -42,7 +43,7 @@ public class QuizController {
     @PostMapping
     public ResponseEntity<QuizResponseDTO> create(@Valid @RequestBody QuizCreateRequestDTO request) {
         QuizResponseDTO response = quizService.create(request);
-        return ResponseEntity.ok(response);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @PatchMapping("/{id}")

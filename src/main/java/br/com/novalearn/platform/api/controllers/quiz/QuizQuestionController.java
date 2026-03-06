@@ -6,6 +6,7 @@ import br.com.novalearn.platform.api.dtos.quiz.question.QuizQuestionUpdateReques
 import br.com.novalearn.platform.domain.services.auth.AuthService;
 import br.com.novalearn.platform.domain.services.quiz.QuizQuestionService;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -43,7 +44,7 @@ public class QuizQuestionController {
     ) {
         request.setQuizId(quizId);
         QuizQuestionResponseDTO response = quizQuestionService.create(getUserId(), request);
-        return ResponseEntity.ok(response);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @PatchMapping("/{id}")

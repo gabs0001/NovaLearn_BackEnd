@@ -27,6 +27,7 @@ import java.util.List;
 public class SecurityConfig {
     private final UserService userService;
     private final JWTUtil jwtUtil;
+    private final JWTAuthenticationFilter jwtAuthenticationFilter;
     private final CustomAuthenticationEntryPoint authenticationEntryPoint;
     private final CustomAccessDeniedHandler accessDeniedHandler;
 
@@ -38,6 +39,7 @@ public class SecurityConfig {
     ) {
         this.userService = userService;
         this.jwtUtil = jwtUtil;
+        this.jwtAuthenticationFilter = new JWTAuthenticationFilter(jwtUtil, userService);
         this.authenticationEntryPoint = authenticationEntryPoint;
         this.accessDeniedHandler = accessDeniedHandler;
     }
@@ -55,34 +57,43 @@ public class SecurityConfig {
                         .accessDeniedHandler(accessDeniedHandler)
                 )
                 .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/api/auth/login", "/api/auth/register", "/api/auth/refresh")
+                            .permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/courses/**", "/api/modules/**", "/api/lessons/**", "/api/categories/**")
+                            .permitAll()
+
                         .requestMatchers(
-                                "/api/auth/login",
-                                "/api/auth/register",
-                                "/api/auth/refresh"
-                        ).permitAll()
+                                HttpMethod.POST,
+                                "/api/categories/**", "/api/courses/**", "/api/modules/**", "/api/lessons/**", "/api/quizzes/**")
+                        .hasAuthority("ADMIN")
+                        .requestMatchers(
+                                HttpMethod.PATCH,
+                                "/api/categories/**", "/api/courses/**", "/api/modules/**", "/api/lessons/**", "/api/quizzes/**")
+                        .hasAuthority("ADMIN")
+                        .requestMatchers(
+                                HttpMethod.DELETE,
+                                "/api/categories/**", "/api/courses/**", "/api/modules/**", "/api/lessons/**", "/api/quizzes/**")
+                        .hasAuthority("ADMIN")
 
-                        .requestMatchers(HttpMethod.GET,
-                                "/api/courses/**",
-                                "/api/modules/**",
-                                "/api/lessons/**",
-                                "/api/categories/**"
-                        ).permitAll()
+                        .requestMatchers("/api/categories/admin/**", "/api/courses/admin/**", "/api/lessons/admin/**").hasAuthority("ADMIN")
+                        .requestMatchers("/api/reviews/admin/**", "/api/reviews/*/approve", "/api/reviews/*/reject").hasAuthority("ADMIN")
+                        .requestMatchers("/api/users/**").hasAuthority("ADMIN")
 
-                        .requestMatchers("/api/reviews/admin/**").hasRole("ADMIN")
-                        .requestMatchers("/api/reviews/*/approve").hasRole("ADMIN")
-                        .requestMatchers("/api/reviews/*/reject").hasRole("ADMIN")
+                        .requestMatchers("/api/me/**").hasAnyAuthority("STUDENT", "ADMIN")
+                        .requestMatchers("/api/auth/me", "/api/auth/check", "/api/auth/logout", "/api/auth/change-password")
+                        .authenticated()
 
                         .anyRequest().authenticated()
                 )
-                .addFilterBefore(jwtAuthenticationFilter(),
+                .addFilterBefore(jwtAuthenticationFilter,
                         UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
 
-    @Bean
+    /*@Bean
     public JWTAuthenticationFilter jwtAuthenticationFilter() {
         return new JWTAuthenticationFilter(jwtUtil, userService);
-    }
+    }*/
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {

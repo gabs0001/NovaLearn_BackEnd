@@ -9,6 +9,7 @@ import br.com.novalearn.platform.api.dtos.module.ModuleListResponseDTO;
 import br.com.novalearn.platform.domain.services.auth.AuthService;
 import br.com.novalearn.platform.domain.services.course.CourseService;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -42,7 +43,7 @@ public class CourseController {
     @PostMapping
     public ResponseEntity<CourseResponseDTO> create(@Valid @RequestBody CourseCreateRequestDTO request) {
         CourseResponseDTO response = courseService.create(getUserId(), request);
-        return ResponseEntity.ok(response);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @PatchMapping("/{id}")

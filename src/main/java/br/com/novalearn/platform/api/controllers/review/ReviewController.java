@@ -7,6 +7,7 @@ import br.com.novalearn.platform.api.dtos.review.ReviewUpdateRequestDTO;
 import br.com.novalearn.platform.domain.services.auth.AuthService;
 import br.com.novalearn.platform.domain.services.review.ReviewService;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -40,7 +41,7 @@ public class ReviewController {
     @PostMapping
     public ResponseEntity<ReviewResponseDTO> create(@Valid @RequestBody ReviewCreateRequestDTO request) {
         ReviewResponseDTO response = reviewService.create(getUserId(), request);
-        return ResponseEntity.ok(response);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @PatchMapping("/{id}")
