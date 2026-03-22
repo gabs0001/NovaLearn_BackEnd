@@ -11,3 +11,10 @@ spring:
 
   flyway:
     enabled: false
+
+logging:
+  level:
+    org:
+      springframework:
+        security: DEBUG
+        web: DEBUG

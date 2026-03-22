@@ -5,6 +5,7 @@ import br.com.novalearn.platform.api.dtos.lesson.content.LessonContentResponseDT
 import br.com.novalearn.platform.domain.services.auth.AuthService;
 import br.com.novalearn.platform.domain.services.lesson.LessonContentService;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,6 +34,6 @@ public class LessonContentController {
             @Valid @RequestBody LessonContentCreateRequestDTO request
     ) {
         LessonContentResponseDTO response = lessonContentService.create(id, request, getUserId());
-        return ResponseEntity.ok(response);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 }

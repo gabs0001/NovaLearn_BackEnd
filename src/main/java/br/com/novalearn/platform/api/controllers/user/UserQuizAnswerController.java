@@ -6,6 +6,7 @@ import br.com.novalearn.platform.api.dtos.user.quizanswer.UserQuizAnswerResponse
 import br.com.novalearn.platform.domain.services.auth.AuthService;
 import br.com.novalearn.platform.domain.services.user.UserQuizAnswerService;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,7 +30,7 @@ public class UserQuizAnswerController {
             @Valid @RequestBody UserQuizAnswerCreateRequestDTO request
     ) {
         UserQuizAnswerResponseDTO response = userQuizAnswerService.answerQuestion(request, getUserId());
-        return ResponseEntity.ok(response);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @PatchMapping("/{id}/change-answer")
