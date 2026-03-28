@@ -14,6 +14,7 @@ public class MyCourseMapper {
                 userCourse.getCourse() != null ? userCourse.getCourse().getId() : null,
                 userCourse.getCourse() != null ? userCourse.getCourse().getName() : null,
                 userCourse.getCourse() != null ? userCourse.getCourse().getShortDescription() : null,
+                userCourse.getCourse() != null ? userCourse.getCourse().getSlug() : null,
                 userCourse.getEnrollmentStatus(),
                 userCourse.getEnrolledAt()
         );

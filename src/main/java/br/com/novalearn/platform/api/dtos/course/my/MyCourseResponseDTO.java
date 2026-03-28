@@ -10,6 +10,7 @@ public class MyCourseResponseDTO {
     private Long courseId;
     private String name;
     private String shortDescription;
+    private String slug;
     private EnrollmentStatus enrollmentStatus;
     private LocalDateTime enrolledAt;
 
@@ -19,12 +20,14 @@ public class MyCourseResponseDTO {
             Long courseId,
             String name,
             String shortDescription,
+            String slug,
             EnrollmentStatus enrollmentStatus,
             LocalDateTime enrolledAt
     ) {
         this.courseId = courseId;
         this.name = name;
         this.shortDescription = shortDescription;
+        this.slug = slug;
         this.enrollmentStatus = enrollmentStatus;
         this.enrolledAt = enrolledAt;
     }
@@ -34,10 +37,12 @@ public class MyCourseResponseDTO {
     public String getShortDescription() { return shortDescription; }
     public EnrollmentStatus getEnrollmentStatus() { return enrollmentStatus; }
     public LocalDateTime getEnrolledAt() { return enrolledAt; }
+    public String getSlug() { return slug; }
 
     public void setCourseId(Long courseId) { this.courseId = courseId; }
     public void setName(String name) { this.name = name; }
     public void setShortDescription(String shortDescription) { this.shortDescription = shortDescription; }
     public void setEnrollmentStatus(EnrollmentStatus enrollmentStatus) { this.enrollmentStatus = enrollmentStatus; }
     public void setEnrolledAt(LocalDateTime enrolledAt) { this.enrolledAt = enrolledAt; }
+    public void setSlug(String slug) { this.slug = slug; }
 }

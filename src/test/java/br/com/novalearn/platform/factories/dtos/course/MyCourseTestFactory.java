@@ -11,6 +11,7 @@ public final class MyCourseTestFactory {
                 1L,
                 "Java Fundamentals",
                 "Java course for beginners",
+                "java-fundamentals",
                 EnrollmentStatus.IN_PROGRESS,
                 LocalDateTime.now().minusDays(10)
         );
@@ -21,6 +22,7 @@ public final class MyCourseTestFactory {
                 1L,
                 "Java Fundamentals",
                 "Java course for beginners",
+                "java-fundamentals",
                 EnrollmentStatus.COMPLETED,
                 LocalDateTime.now().minusDays(10)
         );

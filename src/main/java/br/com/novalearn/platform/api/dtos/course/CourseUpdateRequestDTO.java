@@ -1,6 +1,5 @@
 package br.com.novalearn.platform.api.dtos.course;
 
-import br.com.novalearn.platform.domain.enums.CourseStatus;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Pattern;
