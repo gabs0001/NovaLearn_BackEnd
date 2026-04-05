@@ -2,6 +2,7 @@ package br.com.novalearn.platform.api.controllers.user;
 
 import br.com.novalearn.platform.api.dtos.user.lessonprogress.UserLessonProgressListResponseDTO;
 import br.com.novalearn.platform.api.dtos.user.lessonprogress.UserLessonProgressResponseDTO;
+import br.com.novalearn.platform.api.dtos.user.lessonprogress.UserLessonProgressUpdateRequestDTO;
 import br.com.novalearn.platform.domain.services.auth.AuthService;
 import br.com.novalearn.platform.domain.services.user.MyLessonProgressService;
 import org.springframework.http.ResponseEntity;
@@ -38,6 +39,16 @@ public class MyLessonProgressController {
     ) {
         return ResponseEntity.ok(
                 myLessonProgressService.completeLesson(lessonId, getUserId())
+        );
+    }
+
+    @PatchMapping("/{lessonId}/progress")
+    public ResponseEntity<UserLessonProgressResponseDTO> updateProgress(
+            @PathVariable Long lessonId,
+            @RequestBody UserLessonProgressUpdateRequestDTO request
+    ) {
+        return ResponseEntity.ok(
+                myLessonProgressService.updateProgress(lessonId, getUserId(), request)
         );
     }
 }

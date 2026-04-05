@@ -6,13 +6,13 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class UpdateLessonProgressRequestDTO {
+public class UserLessonProgressUpdateRequestDTO {
     @NotNull
     @Min(0)
     @Max(100)
     private Integer progressPercent;
 
-    public UpdateLessonProgressRequestDTO() {}
+    public UserLessonProgressUpdateRequestDTO() {}
 
     public Integer getProgressPercent() { return progressPercent; }
 

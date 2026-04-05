@@ -11,6 +11,7 @@ public class LessonListResponseDTO {
     private Integer durationSeconds;
     private Boolean visible;
     private Boolean active;
+    private Boolean deleted;
 
     public LessonListResponseDTO() {}
 
@@ -21,7 +22,8 @@ public class LessonListResponseDTO {
             Integer sequence,
             Integer durationSeconds,
             Boolean visible,
-            Boolean active
+            Boolean active,
+            Boolean deleted
     ) {
         this.id = id;
         this.moduleId = moduleId;
@@ -30,6 +32,7 @@ public class LessonListResponseDTO {
         this.durationSeconds = durationSeconds;
         this.visible = visible;
         this.active = active;
+        this.deleted = deleted;
     }
 
     public Long getId() { return id; }
@@ -39,6 +42,7 @@ public class LessonListResponseDTO {
     public Integer getDurationSeconds() { return durationSeconds; }
     public Boolean getVisible() { return visible; }
     public Boolean getActive() { return active; }
+    public Boolean getDeleted() { return deleted; }
 
     public void setId(Long id) { this.id = id; }
     public void setModuleId(Long moduleId) { this.moduleId = moduleId; }
@@ -47,4 +51,5 @@ public class LessonListResponseDTO {
     public void setDurationSeconds(Integer durationSeconds) { this.durationSeconds = durationSeconds; }
     public void setVisible(Boolean visible) { this.visible = visible; }
     public void setActive(Boolean active) { this.active = active; }
+    public void setDeleted(Boolean deleted) { this.deleted = deleted; }
 }

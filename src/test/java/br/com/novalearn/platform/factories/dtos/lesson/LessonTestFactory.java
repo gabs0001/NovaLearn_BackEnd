@@ -43,7 +43,8 @@ public final class LessonTestFactory {
                 1,
                 300,
                 true,
-                true
+                true,
+                false
         );
     }
 

@@ -55,7 +55,8 @@ public class LessonMapper {
                 entity.getSequence(),
                 entity.getDurationSeconds(),
                 entity.isVisible(),
-                entity.isActive()
+                entity.isActive(),
+                entity.isDeleted()
         );
     }
 }
